@@ -1,0 +1,23 @@
+{% extends 'distributions_list/layout.html' %}
+
+{% block title %}
+	Список дистрибуитивов
+{% endblock %}
+
+{% block content %}
+	<div class="features">
+		<h1>{{ title }}</h1>
+		<p>Список дистрибуитивов</p>
+		<button class="btn btn-warning">На страницу</button>
+		{% if dists %}
+			{% for el in dists %}
+				<div class="alert alert-warning">
+					<h3>{{ el.name }}</h3>
+					<p>{{ el.short_info }}</p>
+					<a href="{% url 'dist-detail' el.id %}" class="btn btn-warning">Смотреть подробнее</a>
+				</div>
+			{% endfor %}
+		{% else %}
+			<p>К сожалению, не было найдено дистрибутивов, соответствующих вашим требованиям(</p>
+		{% endif %}
+{% endblock %}
