@@ -38,6 +38,7 @@ class Reviews(models.Model):
 	dist_id = models.IntegerField('ID дистрибутива')
 	text = models.TextField('Отзыв')
 	rate = models.IntegerField('Оценка')
+	date = models.DateTimeField('Дата')
 	
 	def __str__(self):
 		return self.user_id

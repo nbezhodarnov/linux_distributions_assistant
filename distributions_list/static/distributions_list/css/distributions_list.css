@@ -1,57 +1,17 @@
-body {
-	background: #2c2c2c;
+div.panel {
+	text-align: center;
 }
 
-aside {
-	background: #181818;
-	width: 100%;
-	padding: 2.5%;
-	height: 80px;
-	color: #fff;
-	border-bottom: 5px solid #4d4d4d;
-}
-
-aside img {
-	width: 80px;
-	float: left;
-}
-
-aside .logo {
-	font-size: 40px;
+img.logo-img {
+	height: 50px;
 	margin-left: 10px;
-	font-weight: bold;
-	position: relative;
-	top: -5px;
-}
-
-aside h3 {
-	margin-left: 50px;
-	font-size: 25px;
-}
-
-aside ul {
-	list-style: none;
-}
-
-aside ul li {
-	color: #fff;
-	display: block;
-	margin-top: 20px;
-	transition transform .6s ease;
-}
-
-aside ul li:hover, aside ul a:hover {
-	color: #eb5959;
-	text-decoration: none;
-	transform: scale(1.05);
+	margin-right: 10px;
 }
 
 main .features {
-	float: left;
-	color: #fff;
+	float: center;
 	margin-top: 100px;
 	text-align: center;
-	width: 75%;
 }
 
 main .features h1 {
@@ -59,6 +19,6 @@ main .features h1 {
 }
 
 main .features p {
-	max-width: 400px;
+	max-width: 90%;
 	margin: 20px auto;
 }
