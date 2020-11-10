@@ -1,10 +1,12 @@
 {% extends 'distributions_list/layout.html' %}
+{% load static %}
 
 {% block title %}
 	Список дистрибуитивов
 {% endblock %}
 
 {% block extra-link %}
+	<link rel="stylesheet" href="{% static 'distributions_list/css/distributions_list.css' %}">
 	<!--Plugin CSS file with desired skin-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
 	<!--jQuery-->
@@ -37,6 +39,7 @@
 		{% else %}
 			<p>К сожалению, не было найдено дистрибутивов, соответствующих вашим требованиям(</p>
 		{% endif %}
+	</div>
 {% endblock %}
 
 {% block extra-js%}

@@ -1,0 +1,59 @@
+div.panel {
+	text-align: center;
+}
+
+img.logo-img {
+	height: 50px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+div.input-body {
+	margin: 40px auto;
+}
+
+div.slide {
+	margin: 30px auto;
+}
+
+div.input-body button {
+	width: 30%;
+}
+
+input.slide {
+	display: none;
+}
+
+main {
+	display: flex;
+	justify-content: center;
+}
+
+main .features {
+	max-width: 90%;
+	min-width: 70%;
+	margin-top: 50px;
+	text-align: center;
+}
+
+main .features h1 {
+	font-size: 50px;
+}
+
+main .features .demo-body h3 {
+	font-size: 25px;
+}
+
+main .features p {
+	margin: 20px auto;
+}
+
+main .features .input-group.mb-3 {
+	width: 70%;
+	margin: 30px auto;
+}
+
+main .features .btn {
+	margin: 30px auto;
+	margin-bottom: 20px;
+}
