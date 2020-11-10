@@ -4,8 +4,27 @@
 	Список дистрибуитивов
 {% endblock %}
 
+{% block extra-link %}
+	<!--Plugin CSS file with desired skin-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+	<!--jQuery-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!--Plugin JavaScript file-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+{% endblock %}
+
 {% block content %}
 	<div class="features">
+		<h1>Критерии дистрибутива</h1>
+		<div class="input-body">
+			{% for slide in criteries.slides %}
+				<div class="slide">
+					<h3>{{ slide.name }}</h3>
+					<input id="{{ slide.id }}" type="text" name="" value="" class="slide irs-hidden-input" tabindex="-1" readonly="">
+				</div>
+			{% endfor %}
+			<button type="button" class="btn btn-primary">Показать</button>
+		</div>
 		<h1>Список дистрибуитивов</h1>
 		{% if dists %}
 			{% for el in dists %}
@@ -18,4 +37,22 @@
 		{% else %}
 			<p>К сожалению, не было найдено дистрибутивов, соответствующих вашим требованиям(</p>
 		{% endif %}
+{% endblock %}
+
+{% block extra-js%}
+	<script type="text/javascript">
+		$( function() {
+			{% for slide in criteries.slides %}
+				$("#{{ slide.id }}").ionRangeSlider({
+					type: "double",
+					grid: true,
+					grid_num: 5,
+					min: 0,
+					max: 5,
+					from: 0,
+					to: 5
+				});
+			{% endfor %}
+		});
+	</script>
 {% endblock %}

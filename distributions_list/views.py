@@ -11,4 +11,15 @@ class DistributionDetailView(DetailView):
 
 def index(request):
 	#dists = Distributions.objects.order_by('name');
-	return render(request, 'distributions_list/index.html')#, {'dists': dists})
+	criteries = {
+		'slides': [
+			{ 'id': 'popularity', 'name': 'Популярность'},
+			{ 'id': 'support', 'name': 'Поддерживаемость сообществом'},
+			{ 'id': 'stability', 'name': 'Надёжность и стабильность'},
+			{ 'id': 'user-friendly', 'name': 'Простота в использовании'},
+			{ 'id': 'program-update-frequency', 'name': 'Частота обновлений программ'},
+			{ 'id': 'customizability', 'name': 'Настраиваемость системы'},
+			{ 'id': 'consumption', 'name': 'Потребление'}
+		]
+	}
+	return render(request, 'distributions_list/index.html', {'criteries': criteries})
