@@ -19,6 +19,7 @@ div.input-body {
 }
 
 div.slide {
+	width: 70%;
 	margin: 30px auto;
 }
 
@@ -47,6 +48,33 @@ main .features h1 {
 
 main .features .demo-body h3 {
 	font-size: 25px;
+}
+
+main .features .info-block h3 {
+	margin: 20px auto;
+}
+
+main .features .dists-block {
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+main .features .dist.alert.alert-primary {
+	width: 70%;
+	margin: auto;
+}
+
+main .features img.dist-logo-img {
+	width: 50px;
+	margin-right: 10px;
+}
+
+main .features .dist-title {
+	display: inline-flex;
+}
+
+main .features .dist-title h3 {
+	margin: auto;
 }
 
 main .features p {

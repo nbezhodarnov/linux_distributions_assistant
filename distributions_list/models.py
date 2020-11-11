@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class IntegerRangeField(models.IntegerField):
 	def __init__(self, verbose_name=None, name=None, min_value=0, max_value=5, **kwargs):
@@ -16,7 +17,7 @@ class Distributions(models.Model):
 	name = models.CharField('Название', max_length=50)
 	short_info = models.CharField('Кратко', max_length=250)
 	full_info = models.TextField('Информация')
-	image = models.ImageField('Изображение')
+	icon = models.ImageField('Изображение', upload_to="distributions_list/media/distributions_list/")
 	#date = models.DateTimeField('Дата')
 	popularity = IntegerRangeField('Популярность')
 	society_support = IntegerRangeField('Поддерживаемость сообществом')
@@ -34,14 +35,11 @@ class Distributions(models.Model):
 		verbose_name_plural = 'Дистрибутивы'
 
 class Reviews(models.Model):
-	user_id = models.IntegerField('ID пользователя')
-	dist_id = models.IntegerField('ID дистрибутива')
+	user_id = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='ID пользователя')
+	dist_id = models.ForeignKey(Distributions, on_delete=models.CASCADE, verbose_name='ID дистрибутива')
 	text = models.TextField('Отзыв')
-	rate = models.IntegerField('Оценка')
+	rate = IntegerRangeField('Оценка')
 	date = models.DateTimeField('Дата')
-	
-	def __str__(self):
-		return self.user_id
 	
 	class Meta:
 		verbose_name = 'Отзыв'

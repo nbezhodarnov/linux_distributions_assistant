@@ -1,0 +1,83 @@
+{% extends 'distributions_list/layout.html' %}
+{% load static %}
+
+{% block title %}
+	{{ dist.name }}
+{% endblock %}
+
+{% block extra-link %}
+	<link rel="stylesheet" href="{% static 'distributions_list/css/distributions_list.css' %}">
+	<link rel="stylesheet" href="{% static 'distributions_list/css/dist.css' %}">
+	<!--jQuery-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{% endblock %}
+
+{% block panel-right %}
+	{% if user and user.username %}
+		<h5>{{ user.username }}</h5>
+		<a class="btn btn-outline-primary" href="/accounts/logout">Выйти</a>
+	{% else %}
+		<a class="btn btn-outline-primary" href="/accounts/login">Вход</a>
+		<a class="btn btn-outline-primary" href="/accounts/register">Регистрация</a>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<div class="features">
+		<div class="dist-title">
+			<img class="dist-logo-img" src="{{ dist.icon.url }}">
+			<h1>{{ dist.name }}</h1>
+		</div>
+		<div class="info-block">
+			<h3>Популярность: {{ dist.popularity }}</h3>
+			<h3>Поддерживаемость сообществом: {{ dist.society_support }}</h3>
+			<h3>Надёжность и стабильность: {{ dist.stability }}</h3>
+			<h3>Простота в использовании: {{ dist.user_friendly }}</h3>
+			<h3>Частота обновлений программ: {{ dist.programs_update_frequency }}</h3>
+			<h3>Настраиваемость: {{ dist.customizability }}</h3>
+			<h3>Потребление: {{ dist.consumption }}</h3>
+		</div>
+		<div class="text-block">
+			{% autoescape off %}
+			{{ dist.full_info }}
+			{% endautoescape %}
+		</div>
+		{% if user and user.username %}
+			<div class="input-review">
+				<h3>Оставить отзыв</h3>
+				<form method="post">
+					{% csrf_token %}
+					{% for element in form %}
+						<div class="input-group mb-3">
+							{{ element }}
+						</div>
+					{% endfor %}
+					<input type="submit" class="btn btn-primary" value="Опубликовать">
+				</form>
+			</div>
+		{% else %}
+			
+		{% endif %}
+		{% if reviews %}
+			<div class="reviews">
+			{% for element in reviews %}
+				<div class="review">
+					{{ element.text }}
+					{{ element.date }}
+					{{ element.user_id.username }}
+				</div>
+			{% endfor %}
+			</div>
+		{% else %}
+			<p>Похоже, ещё никто не оставил здесь отзыв данному дистрибутиву. Вы можете быть первыми!</p>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block extra-js%}
+	<script type="text/javascript">
+		$( function() {
+			
+		});
+	</script>
+{% endblock %}

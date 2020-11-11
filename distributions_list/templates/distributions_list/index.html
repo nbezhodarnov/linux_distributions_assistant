@@ -39,13 +39,18 @@
 		</div>
 		<h1>Список дистрибуитивов</h1>
 		{% if dists %}
+			<div class="dists-block">
 			{% for el in dists %}
-				<div class="alert alert-warning">
-					<h3>{{ el.name }}</h3>
+				<div class="dist alert alert-primary">
+					<div class="dist-title">
+						<img class="dist-logo-img" src="{{ el.icon.url }}">
+						<h3>{{ el.name }}</h3>
+					</div>
 					<p>{{ el.short_info }}</p>
-					<a href="{% url 'dist-detail' el.id %}" class="btn btn-warning">Смотреть подробнее</a>
+					<a href="{% url 'dist' el.id %}" class="btn btn-primary">Смотреть подробнее</a>
 				</div>
 			{% endfor %}
+			</div>
 		{% else %}
 			<p>К сожалению, не было найдено дистрибутивов, соответствующих вашим требованиям(</p>
 		{% endif %}
