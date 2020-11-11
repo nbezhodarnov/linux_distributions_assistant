@@ -15,6 +15,16 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
 {% endblock %}
 
+{% block panel-right %}
+	{% if user and user.username %}
+		<h5>{{ user.username }}</h5>
+		<a class="btn btn-outline-primary" href="/accounts/logout">Выйти</a>
+	{% else %}
+		<a class="btn btn-outline-primary" href="/accounts/login">Вход</a>
+		<a class="btn btn-outline-primary" href="/accounts/register">Регистрация</a>
+	{% endif %}
+{% endblock %}
+
 {% block content %}
 	<div class="features">
 		<h1>Критерии дистрибутива</h1>

@@ -57,3 +57,8 @@ main .features .btn {
 	margin: 30px auto;
 	margin-bottom: 20px;
 }
+
+main .features .alert.alert-danger {
+	width: 70%;
+	margin: auto;
+}

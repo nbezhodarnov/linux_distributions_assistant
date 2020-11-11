@@ -8,6 +8,12 @@ img.logo-img {
 	margin-right: 10px;
 }
 
+nav h5 {
+	display: inline-block;
+	vertical-align: bottom;
+	margin-right: 20px;
+}
+
 div.input-body {
 	margin: 40px auto;
 }

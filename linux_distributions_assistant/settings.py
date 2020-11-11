@@ -25,7 +25,10 @@ SECRET_KEY = 'q5(km7l5m4k3#_wpa*upruat5djmig9ri0*na7v-gj5-)4mg4^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+	'127.0.0.1',
+	'192.168.14.38'
+]
 
 
 # Application definition
