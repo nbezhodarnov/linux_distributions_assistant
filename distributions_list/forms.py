@@ -15,7 +15,7 @@ class ReviewForm(forms.ModelForm):
 				'data-max': '5',
 				'data-step': '1',
 				'value': '0',
-				'class': 'rating rating-loading'
+				'class': 'rating'
 			}),
 			"text": Textarea(attrs={
 				'class': 'form-control',

@@ -19,7 +19,6 @@ div.input-body {
 }
 
 div.slide {
-	width: 70%;
 	margin: 30px auto;
 }
 
@@ -37,7 +36,7 @@ main {
 }
 
 main .features {
-	max-width: 90%;
+	width: 70%;
 	margin-top: 50px;
 	text-align: center;
 }
@@ -60,8 +59,8 @@ main .features .dists-block {
 }
 
 main .features .dist.alert.alert-primary {
-	width: 70%;
 	margin: auto;
+	margin-bottom: 20px;
 }
 
 main .features img.dist-logo-img {

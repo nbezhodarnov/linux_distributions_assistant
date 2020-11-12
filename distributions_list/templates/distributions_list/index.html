@@ -29,13 +29,16 @@
 	<div class="features">
 		<h1>Критерии дистрибутива</h1>
 		<div class="input-body">
-			{% for slide in criteries.slides %}
-				<div class="slide">
-					<h3>{{ slide.name }}</h3>
-					<input id="{{ slide.id }}" type="text" name="" value="" class="slide irs-hidden-input" tabindex="-1" readonly="">
-				</div>
-			{% endfor %}
-			<button type="button" class="btn btn-primary">Показать</button>
+			<form method="post">
+				{% csrf_token %}
+				{% for slide in criteries.slides %}
+					<div class="slide">
+						<h3>{{ slide.name }}</h3>
+						<input id="{{ slide.id }}" type="text" name="{{ slide.id }}" class="slide irs-hidden-input" tabindex="-1" readonly="">
+					</div>
+				{% endfor %}
+				<button type="submit" class="btn btn-primary">Показать</button>
+			</form>
 		</div>
 		<h1>Список дистрибуитивов</h1>
 		{% if dists %}
@@ -67,8 +70,8 @@
 					grid_num: 5,
 					min: 0,
 					max: 5,
-					from: 0,
-					to: 5
+					from: {{ slide.from }},
+					to: {{ slide.to }}
 				});
 			{% endfor %}
 		});
