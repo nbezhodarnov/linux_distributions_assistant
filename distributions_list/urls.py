@@ -20,4 +20,6 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('<int:pk>', views.DistributionDetailView.as_view(), name='dist'),
+    path('reviews/<int:pk>', views.ReviewUpdateView.as_view(), name='review-detail'),
+    path('reviews/<int:pk>/delete', views.ReviewDeleteView.as_view(), name='review-delete')
 ]

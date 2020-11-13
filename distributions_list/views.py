@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from .models import Distributions, Reviews
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.models import User
+from django.http import HttpResponse, Http404
 from django.db.models import Q
 from datetime import datetime
 from . import forms
@@ -55,12 +56,55 @@ class DistributionDetailView(DetailView):
 
 class ReviewUpdateView(UpdateView):
 	model = Reviews
-	template_name = 'distributions_list/dist_edit.html'
+	template_name = 'distributions_list/review_edit.html'
 	context_object_name = 'review'
-	
 	form_class = forms.ReviewForm
 	
+	def get_success_url(self):
+		return reverse('dist', kwargs={'pk': self.object.dist_id.id})
 	
+	def get_object(self, *args, **kwargs):
+		obj = super(ReviewUpdateView, self).get_object(*args, **kwargs)
+		print(obj.user_id, self.request.user)
+		if (not(self.request.user.is_authenticated) or obj.user_id != self.request.user):
+			raise Http404
+		return obj
+	
+	def post(self, request, *args, **kwargs):
+		form = forms.ReviewForm(request.POST)
+		self.object = self.get_object()
+		data = super(ReviewUpdateView, self).get_context_data(**kwargs)
+		if (self.request.user.is_authenticated):
+			data['form'] = forms.ReviewForm(request.POST)
+			if (form.is_valid() and form.cleaned_data.get("text")):
+				obj = form.save(commit=False)
+				if (obj.rate > 0):
+					return super(ReviewUpdateView, self).post(request, *args, **kwargs)
+				else:
+					data['error'] = 'Пожалуйста, выставите оценку'
+			else:
+				if (form.cleaned_data.get("text")):
+					data['error'] = 'Ошибка валидации данных'
+				else:
+					data['error'] = 'Пожалуйста, напишите отзыв'
+		else:
+			data['error'] = 'Только авторизированные пользователи могут оставлять отзывы'
+		return self.render_to_response(context=data)
+
+class ReviewDeleteView(DeleteView):
+	model = Reviews
+	template_name = 'distributions_list/review_delete.html'
+	context_object_name = 'review'
+	
+	def get_success_url(self):
+		return reverse('dist', kwargs={'pk': self.object.dist_id.id})
+	
+	def get_object(self, *args, **kwargs):
+		obj = super(ReviewDeleteView, self).get_object(*args, **kwargs)
+		print(obj.user_id, self.request.user)
+		if (not(self.request.user.is_authenticated) or obj.user_id != self.request.user):
+			raise Http404
+		return obj
 
 def index(request):
 	criteries = {
@@ -68,8 +112,8 @@ def index(request):
 			{ 'id': 'popularity', 'name': 'Популярность', 'from': '0', 'to': '5'},
 			{ 'id': 'support', 'name': 'Поддерживаемость сообществом', 'from': '0', 'to': '5'},
 			{ 'id': 'stability', 'name': 'Надёжность и стабильность', 'from': '0', 'to': '5'},
-			{ 'id': 'user-friendly', 'name': 'Простота в использовании', 'from': '0', 'to': '5'},
-			{ 'id': 'program-update-frequency', 'name': 'Частота обновлений программ', 'from': '0', 'to': '5'},
+			{ 'id': 'user_friendly', 'name': 'Простота в использовании', 'from': '0', 'to': '5'},
+			{ 'id': 'program_update_frequency', 'name': 'Частота обновлений программ', 'from': '0', 'to': '5'},
 			{ 'id': 'customizability', 'name': 'Настраиваемость системы', 'from': '0', 'to': '5'},
 			{ 'id': 'consumption', 'name': 'Потребление', 'from': '0', 'to': '5'}
 		]

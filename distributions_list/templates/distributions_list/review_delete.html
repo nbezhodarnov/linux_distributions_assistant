@@ -2,13 +2,14 @@
 {% load static %}
 
 {% block title %}
-	Редактирование отзыва
+	Удаление отзыва
 {% endblock %}
 
 {% block extra-link %}
 	<link rel="stylesheet" href="{% static 'distributions_list/css/distributions_list.css' %}">
 	<link rel="stylesheet" href="{% static 'distributions_list/css/dist.css' %}">
 	<link rel="stylesheet" href="{% static 'distributions_list/css/simple-rating.css' %}">
+	<link rel="stylesheet" href="{% static 'distributions_list/css/review_delete.css' %}">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!--jQuery-->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -28,16 +29,13 @@
 
 {% block content %}
 	<div class="features">
+		<h1>Удаление отзыва</h1>
 		{% if user and user.username %}
 			<div class="input-review">
 				<form method="post">
 					{% csrf_token %}
-					{% for element in form %}
-						<div class="input-group mb-3">
-							{{ element }}
-						</div>
-					{% endfor %}
-					<input type="submit" class="btn btn-primary" value="Сохранить">
+					<h3>Вы уверены, что хотите удалить отзыв?</h3>
+					<input type="submit" class="btn btn-primary" value="Удалить">
 				</form>
 			</div>
 			{% if error %}
@@ -52,13 +50,4 @@
 			</div>
 		{% endif %}
 	</div>
-{% endblock %}
-
-{% block extra-js%}
-	<script type="text/javascript">
-		CKEDITOR.replace('text');
-		$(document).ready(function(){
-			$('.rating').rating();
-		});
-	</script>
 {% endblock %}

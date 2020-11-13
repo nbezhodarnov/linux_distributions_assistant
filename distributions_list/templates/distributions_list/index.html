@@ -29,7 +29,7 @@
 	<div class="features">
 		<h1>Критерии дистрибутива</h1>
 		<div class="input-body">
-			<form method="post">
+			<form id="filter" method="post">
 				{% csrf_token %}
 				{% for slide in criteries.slides %}
 					<div class="slide">
@@ -37,12 +37,12 @@
 						<input id="{{ slide.id }}" type="text" name="{{ slide.id }}" class="slide irs-hidden-input" tabindex="-1" readonly="">
 					</div>
 				{% endfor %}
-				<button type="submit" class="btn btn-primary">Показать</button>
+				<button id="show" type="submit" class="btn btn-primary">Показать</button>
 			</form>
 		</div>
-		<h1>Список дистрибуитивов</h1>
+		<h1>Результат</h1>
 		{% if dists %}
-			<div class="dists-block">
+			<div id="dists-block" class="dists-block">
 			{% for el in dists %}
 				<div class="dist alert alert-primary">
 					<div class="dist-title">
@@ -55,15 +55,18 @@
 			{% endfor %}
 			</div>
 		{% else %}
-			<p>К сожалению, не было найдено дистрибутивов, соответствующих вашим требованиям(</p>
+			<div id="dists-block" class="dists-block">
+				<p>К сожалению, не было найдено дистрибутивов, соответствующих вашим требованиям(</p>
+			</div>
 		{% endif %}
 	</div>
 {% endblock %}
 
 {% block extra-js%}
 	<script type="text/javascript">
-		$( function() {
+		$(document).ready(function(){
 			{% for slide in criteries.slides %}
+				var {{ slide.id }}_from = {{ slide.from }}, {{ slide.id }}_to = {{ slide.to }};
 				$("#{{ slide.id }}").ionRangeSlider({
 					type: "double",
 					grid: true,
@@ -71,9 +74,26 @@
 					min: 0,
 					max: 5,
 					from: {{ slide.from }},
-					to: {{ slide.to }}
+					to: {{ slide.to }},
+					onChange(data) {
+						{{ slide.id }}_from = data.from;
+						{{ slide.id }}_to = data.to;
+					}
 				});
 			{% endfor %}
+			
+			$('#filter').submit(function(){
+				$.ajax({
+					url: "",
+					type: "POST",
+					data: "csrfmiddlewaretoken={{ csrf_token }}&"+{% for slide in criteries.slides %}"{{ slide.id }}="+{{ slide.id }}_from.toString()+"."+{{ slide.id }}_to.toString()+"&"+{% endfor %}"ajax=awesome",
+					cache: false,
+					success: function(html){
+						$("#dists-block").html($(html).find("#dists-block"));
+					}
+				});
+				return false;
+			});
 		});
 	</script>
 {% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'distributions_list/layout.html' %}
+{% load static %}
+
+{% block title %}
+	Редактирование отзыва
+{% endblock %}
+
+{% block extra-link %}
+	<link rel="stylesheet" href="{% static 'distributions_list/css/distributions_list.css' %}">
+	<link rel="stylesheet" href="{% static 'distributions_list/css/dist.css' %}">
+	<link rel="stylesheet" href="{% static 'distributions_list/css/simple-rating.css' %}">
+	<link rel="stylesheet" href="{% static 'distributions_list/css/review_detail.css' %}">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!--jQuery-->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script> 
+	<script src="{% static 'distributions_list/js/simple-rating.js' %}"></script>
+{% endblock %}
+
+{% block panel-right %}
+	{% if user and user.username %}
+		<h5>{{ user.username }}</h5>
+		<a class="btn btn-outline-primary" href="/accounts/logout">Выйти</a>
+	{% else %}
+		<a class="btn btn-outline-primary" href="/accounts/login">Вход</a>
+		<a class="btn btn-outline-primary" href="/accounts/register">Регистрация</a>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<div class="features">
+		<h1>Редактирование отзыва</h1>
+		{% if user and user.username %}
+			<div class="input-review">
+				<form method="post">
+					{% csrf_token %}
+					{% for element in form %}
+						<div class="input-group mb-3">
+							{{ element }}
+						</div>
+					{% endfor %}
+					<input type="submit" class="btn btn-primary" value="Сохранить">
+				</form>
+			</div>
+			{% if error %}
+				<div class="alert alert-danger">
+					<strong>{{ error|escape }}</strong>
+				</div>
+			{% endif %}
+		{% else %}
+			<div class="input-review">
+				<h3>Оставить отзыв</h3>
+				<p>Пожалуйста, войдите, чтобы оставить отзыв.</p>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block extra-js%}
+	<script type="text/javascript">
+		CKEDITOR.replace('text');
+		$(document).ready(function(){
+			$('.rating').rating({{ form.rate.value }});
+		});
+	</script>
+{% endblock %}

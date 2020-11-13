@@ -1,6 +1,6 @@
 jQuery.fn.extend({
   rating: function(options){
-    if(typeof(options)=='undefined') options={};
+    if(typeof(options)=='undefined') options=0;
     var ratings=[];
     objs=this;
     if(objs.length){
@@ -15,13 +15,14 @@ class simpleRating{
   constructor(options,obj) {
     this.obj=obj;
     this.options=options;
-    this.rating=0;
+    this.rating=options;
     this.init();
   }
 
   init(){
     var html='<div class="simple-rating star-rating">';
-    for(var i=0;i<5;i++){html+='<i class="fa fa-star-o" data-rating="'+(i+1)+'"></i>';}
+	for(var i=1;i<this.options+1;i++){html+='<i class="fa fa-star" data-rating="'+i+'"></i>';}
+    for(var i=this.options+1;i<6;i++){html+='<i class="fa fa-star-o" data-rating="'+i+'"></i>';}
     html+='</div>';
   
     $(this.obj)

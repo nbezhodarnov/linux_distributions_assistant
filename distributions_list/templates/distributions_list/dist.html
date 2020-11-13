@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="{% static 'distributions_list/css/simple-rating.css' %}">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!--jQuery-->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script> 
 	<script src="{% static 'distributions_list/js/simple-rating.js' %}"></script>
 {% endblock %}
@@ -47,25 +47,25 @@
 			{% endautoescape %}
 		</div>
 		{% if user and user.username %}
-			<div class="input-review">
+			<div id="input-review" class="input-review">
 				<h3>Оставить отзыв</h3>
-				<form method="post">
+				<form id="review-send" method="post">
 					{% csrf_token %}
 					{% for element in form %}
 						<div class="input-group mb-3">
 							{{ element }}
 						</div>
 					{% endfor %}
-					<input type="submit" class="btn btn-primary" value="Опубликовать">
+					<div id="submit-btn" type="submit" class="btn btn-primary" value="Опубликовать">Опубликовать</div>
 				</form>
-			</div>
 			{% if error %}
 				<div class="alert alert-danger">
 					<strong>{{ error|escape }}</strong>
 				</div>
 			{% endif%}
+			</div>
 		{% else %}
-			<div class="input-review">
+			<div id="input-review" class="input-review">
 				<h3>Оставить отзыв</h3>
 				<p>Пожалуйста, войдите, чтобы оставить отзыв.</p>
 			</div>
@@ -74,7 +74,7 @@
 		<div class="reviews-block">
 		<h3 align="center">Отзывы</h3>
 		{% if reviews %}
-			<div class="reviews">
+			<div id="reviews" class="reviews">
 			{% for element in reviews %}
 				<div class="review alert alert-info">
 					<div class="review-rate simple-rating star-rating">
@@ -91,12 +91,14 @@
 					{% autoescape off %}
 					{{ element.text }}
 					{% endautoescape %}
-					<p class="review-info">{{ element.date }}, {{ element.user_id.username }} {% if user.id == element.user_id.id %}<a href="">Редактировать</a>{% endif %}</p>
+					<p class="review-info">{{ element.date }}, {{ element.user_id.username }} {% if user.id == element.user_id.id %}<a href="{% url 'review-detail' element.id %}">Редактировать</a> <a href="{% url 'review-delete' element.id %}">Удалить</a>{% endif %}</p>
 				</div>
 			{% endfor %}
 			</div>
 		{% else %}
-			<p class="no-review-message">Похоже, ещё никто не оставил здесь отзыв данному дистрибутиву. Вы можете быть первыми!</p>
+			<div id="reviews" class="reviews">
+				<p class="no-review-message">Похоже, ещё никто не оставил здесь отзыв данному дистрибутиву. Вы можете быть первыми!</p>
+			</div>
 		{% endif %}
 		</div>
 	</div>
@@ -104,9 +106,31 @@
 
 {% block extra-js%}
 	<script type="text/javascript">
-		CKEDITOR.replace('text');
+		CKEDITOR.replace('id_text');
+		$('#rate').rating();
+		
+		function Text() {
+			if (CKEDITOR.instances["id_text"].getData() === '') return '';
+			if (CKEDITOR.instances["id_text"].getData().localeCompare('<p>') === 0) return '';
+			return CKEDITOR.instances["id_text"].getData();
+		}
+		
 		$(document).ready(function(){
-			$('.rating').rating();
+			$(document).on('click', '#submit-btn', function(){
+				$.ajax({
+					url: "",
+					type: "POST",
+					data: "csrfmiddlewaretoken={{ csrf_token }}&rate="+document.getElementById("rate").value+"&text="+Text(),
+					cache: false,
+					success: function(html){
+						$("#input-review").html($(html).find("#input-review"));
+						$("#reviews").html($(html).find("#reviews"));
+						CKEDITOR.replace('id_text');
+						$('#rate').rating(parseInt(document.getElementById("rate").value));
+					}
+				});
+				return false;
+			});
 		});
 	</script>
 {% endblock %}
