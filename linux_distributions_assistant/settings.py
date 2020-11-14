@@ -39,9 +39,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-db_from_env = dj-database-url.config()
-DATABASE['default'].update(db_from_env)
-
 # Application definition
 
 INSTALLED_APPS = [
