@@ -46,7 +46,7 @@
 			{% for el in dists %}
 				<div class="dist alert alert-primary">
 					<div class="dist-title">
-						<img class="dist-logo-img" src="{{ el.icon.url }}">
+						<img class="dist-logo-img" src="/static/{{ el.icon_path }}">
 						<h3>{{ el.name }}</h3>
 					</div>
 					<p>{{ el.short_info }}</p>

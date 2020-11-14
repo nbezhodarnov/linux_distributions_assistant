@@ -18,6 +18,7 @@ class Distributions(models.Model):
 	short_info = models.CharField('Кратко', max_length=250)
 	full_info = models.TextField('Информация')
 	icon = models.ImageField('Изображение', upload_to="distributions_list/media/distributions_list/")
+	icon_path = models.CharField('Путь к изображению', max_length=250, default='distributions_list/img/tux-seeklogo.com.svg')
 	#date = models.DateTimeField('Дата')
 	popularity = IntegerRangeField('Популярность')
 	society_support = IntegerRangeField('Поддерживаемость сообществом')
