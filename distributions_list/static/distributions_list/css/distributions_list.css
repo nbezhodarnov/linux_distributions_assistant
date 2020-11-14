@@ -69,11 +69,13 @@ main .features img.dist-logo-img {
 }
 
 main .features .dist-title {
-	display: inline-flex;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 main .features .dist-title h3 {
-	margin: auto;
+	margin-top: auto;
 }
 
 main .features p {

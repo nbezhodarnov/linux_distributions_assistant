@@ -14,7 +14,7 @@ class UserRegistrationFormView(FormView):
 	
 	def get(self, request, *args, **kwargs):
 		if self.request.user.is_authenticated:
-			return redirect('/distributions_list', {'user': self.request.user})
+			return redirect('/', {'user': self.request.user})
 		return super(UserRegistrationFormView, self).get(request, *args, **kwargs)
 	
 	def form_valid(self, form):
@@ -26,12 +26,12 @@ class UserRegistrationFormView(FormView):
 
 class UserLoginFormView(LoginView):
 	form_class = forms.UserLoginForm
-	success_url = "distributions_list/"
+	success_url = "/"
 	template_name = 'registration/login.html'
 	
 	def get(self, request, *args, **kwargs):
 		if self.request.user.is_authenticated:
-			return redirect('/distributions_list', {'user': self.request.user})
+			return redirect('/', {'user': self.request.user})
 		return super(UserLoginFormView, self).get(request, *args, **kwargs)
 	
 	def form_valid(self, form):

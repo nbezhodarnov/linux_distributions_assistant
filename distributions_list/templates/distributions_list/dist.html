@@ -30,7 +30,7 @@
 	<div class="features">
 		<div class="dist-title">
 			<img class="dist-logo-img" src="{{ dist.icon.url }}">
-			<h1>{{ dist.name }}</h1>
+			<div id="dist-title"><h1>{{ dist.name }}</h1></div>
 		</div>
 		<div class="info-block">
 			<h3>Популярность: {{ dist.popularity }}</h3>
@@ -105,6 +105,7 @@
 {% endblock %}
 
 {% block extra-js%}
+	{% if user and user.username %}
 	<script type="text/javascript">
 		CKEDITOR.replace('id_text');
 		$('#rate').rating();
@@ -116,6 +117,9 @@
 		}
 		
 		$(document).ready(function(){
+			
+
+			$("#dist-title").css("font-size", size).html(resizer.html());
 			$(document).on('click', '#submit-btn', function(){
 				$.ajax({
 					url: "",
@@ -133,4 +137,5 @@
 			});
 		});
 	</script>
+	{% endif %}
 {% endblock %}
