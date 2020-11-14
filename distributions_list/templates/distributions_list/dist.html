@@ -56,7 +56,7 @@
 							{{ element }}
 						</div>
 					{% endfor %}
-					<div id="submit-btn" type="submit" class="btn btn-primary" value="Опубликовать">Опубликовать</div>
+					<button id="submit-btn" type="submit" class="btn btn-primary" value="Опубликовать">Опубликовать</button>
 				</form>
 			{% if error %}
 				<div class="alert alert-danger">
@@ -117,9 +117,6 @@
 		}
 		
 		$(document).ready(function(){
-			
-
-			$("#dist-title").css("font-size", size).html(resizer.html());
 			$(document).on('click', '#submit-btn', function(){
 				$.ajax({
 					url: "",

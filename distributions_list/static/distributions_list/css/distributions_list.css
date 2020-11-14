@@ -23,7 +23,7 @@ div.slide {
 }
 
 div.input-body button {
-	width: 30%;
+	width: 40%;
 }
 
 input.slide {
@@ -39,14 +39,6 @@ main .features {
 	width: 70%;
 	margin-top: 50px;
 	text-align: center;
-}
-
-main .features h1 {
-	font-size: 50px;
-}
-
-main .features .demo-body h3 {
-	font-size: 25px;
 }
 
 main .features .info-block h3 {
